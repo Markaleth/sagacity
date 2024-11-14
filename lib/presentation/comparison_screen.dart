@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sagacity/data/models/product_model.dart';
 
 import '../dimensions.dart';
+import '../mocks/product_mocks.dart';
+import 'widgets/product_tile_widget.dart';
 import 'widgets/text_input_widget.dart';
 
 class ComparisonScreen extends StatefulWidget {
@@ -24,127 +27,110 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
               const SizedBox(
                 height: spacingXXL,
               ),
-              const IntrinsicHeight(
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(spacingM),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('Baseline'),
-                            Placeholder(
-                              child: Text('#1'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(spacingM),
+                      child: DecoratedBox(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            right: BorderSide(
+                              color: Colors.black,
+                              width: thicknessM,
                             ),
-                            Placeholder(
-                              child: Text('#2'),
-                            ),
-                            Placeholder(
-                              child: Text('#3'),
-                            ),
-                            Placeholder(
-                              child: Text('#4'),
-                            ),
-                            Placeholder(
-                              child: Text('#5'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 6,
-                      child: Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(spacingM),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text('Double column'),
-                                    Placeholder(
-                                      child: Text('#1'),
-                                    ),
-                                    Placeholder(
-                                      child: Text('#2'),
-                                    ),
-                                    Placeholder(
-                                      child: Text('#3'),
-                                    ),
-                                    Placeholder(
-                                      child: Text('#4'),
-                                    ),
-                                    Placeholder(
-                                      child: Text('#5'),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text('Double column'),
-                                    Placeholder(
-                                      child: Text('#1'),
-                                    ),
-                                    Placeholder(
-                                      child: Text('#2'),
-                                    ),
-                                    Placeholder(
-                                      child: Text('#3'),
-                                    ),
-                                    Placeholder(
-                                      child: Text('#4'),
-                                    ),
-                                    Placeholder(
-                                      child: Text('#5'),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
                           ),
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(spacingM),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Score'),
-                            Placeholder(
-                              child: Text('#1'),
-                            ),
-                            Placeholder(
-                              child: Text('#2'),
-                            ),
-                            Placeholder(
-                              child: Text('#3'),
-                            ),
-                            Placeholder(
-                              child: Text('#4'),
-                            ),
-                            Placeholder(
-                              child: Text('#5'),
-                            ),
+                            const Text('Baseline'),
+                            ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: productQueryMocks.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return ProductTileWidget(
+                                      product: ProductModel.fromJson(
+                                          productQueryMocks[index]));
+                                }),
                           ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(spacingM),
+                      child: DecoratedBox(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            right: BorderSide(
+                              color: Colors.black,
+                              width: thicknessM,
+                            ),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text('Spark Results'),
+                            GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: gridViewAspectRatio,
+                                  crossAxisSpacing: spacingM,
+                                  mainAxisSpacing: spacingM,
+                                ),
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: productQueryMocks.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return ProductTileWidget(
+                                      product: ProductModel.fromJson(
+                                          productQueryMocks[index]));
+                                }),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(spacingM),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text('RetailAPI results'),
+                          GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: gridViewAspectRatio,
+                                crossAxisSpacing: spacingM,
+                                mainAxisSpacing: spacingM,
+                              ),
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: productQueryMocks.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return ProductTileWidget(
+                                    product: ProductModel.fromJson(
+                                        productQueryMocks[index]));
+                              }),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
             ],
           ),

@@ -1,3 +1,5 @@
+import '../../dimensions.dart';
+
 class ProductModel {
   late final int id;
   late final String name;
@@ -15,6 +17,8 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     ProductModel product = ProductModel._internal();
+    List<Map<String, dynamic>> gallery =
+        List<Map<String, dynamic>>.from(json['gallery']);
     product.id = json['id'];
     product.name = json['name'];
     product.amid = json['amid'];
@@ -23,9 +27,12 @@ class ProductModel {
     product.sizes = List<String>.from(json['sizes']);
     product.category = json['category'];
     product.categoryIds = List<int>.from(json['category_ids']);
-    // product.thumbnailUrl = json['thumbnail_url']; -> thumbnail to be extracted from gallery (e.g. json[gallery][0][url] with a width parameter)
+    product.thumbnailUrl = _getThumbnailUrl(gallery);
     product.inStock = json['in_stock'];
     product.isNew = json['is_new'];
     return product;
   }
+
+  static String _getThumbnailUrl(List<Map<String, dynamic>> galleryJson) =>
+      galleryJson[0]['url'].replaceAll('{{width}}', '$productTileWidth');
 }

@@ -17,5 +17,7 @@ const double thicknessXS = 0.1;
 
 const Duration defaultAPITimeOutDuration = Duration(milliseconds: 10000);
 
-
 const double defaultBorderRadius = 8;
+const double productTileWidth = 480;
+const double productTileHeight = 612;
+const double gridViewAspectRatio = 0.6;
